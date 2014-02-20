@@ -59,7 +59,7 @@ public class mainServlet extends HttpServlet {
 		
 		String action_class = request.getParameter("action_class");
 		
-		if(!action_class.equals(""))
+		if(!action_class.equals("0"))
 		{
 			ActionInterface action = (ActionInterface) Class.forName(action_class)
 					.newInstance();
