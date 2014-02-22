@@ -1,35 +1,41 @@
 package com.action.user;
 
+import java.lang.reflect.Method;
+
 import javax.servlet.http.HttpServletRequest;
 
-import com.action.ActionInterface;
-import com.hibernate.testDao;
+import net.sf.json.JSONObject;
 
-public class UserAction extends ActionInterface{
-	public String getResult(HttpServletRequest request)
+import com.action.Action;
+
+
+public class UserAction extends Action{
+
+	public UserAction() {
+		this.jsonObject = new JSONObject();
+		jsonObject.element("RC", "-2");
+	}
+	public JSONObject getResult(HttpServletRequest request)
 	{
-		String res ="";
+		this.request = request;
 		String action = request.getParameter("action");
-		if(action!=null&&action.equals("register"))
-		{
-			testDao td = new testDao();
-			if(td.Insert(Integer.parseInt(request.getParameter("id")), request.getParameter("name"), request.getParameter("password")))
-			{
-				res = "sucess";
-			}
-			else
-				res = "false";
+		try {
+			Method method = this.getClass().getMethod(action);
+			jsonObject = (JSONObject)method.invoke(this);
+			jsonObject.element("RC", 0);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		else if(action!=null&&action.equals("login"))
-		{
-			
-		}
-		
-		return res;
-			
-		
-		
+		return jsonObject;
 	}
 
+	public JSONObject register() {
+		return jsonObject;
+	}
+
+	public JSONObject login() {
+//		String userId = request.getParameter("userId");
+//		String password = request.getParameter("password");
+		return jsonObject;
+	}
 }

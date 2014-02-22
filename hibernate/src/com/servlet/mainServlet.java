@@ -2,25 +2,23 @@ package com.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.action.ActionInterface;
-import com.hibernate.testDao;
-import com.model.myTest;
+import net.sf.json.JSONObject;
+
+
+import com.action.Action;
 
 
 
-
-
+@SuppressWarnings("serial")
+@WebServlet("/")
 public class mainServlet extends HttpServlet {
-	
-
 
 	/**
 	 * Constructor of the object.
@@ -49,35 +47,22 @@ public class mainServlet extends HttpServlet {
 	 */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		response.setContentType("text/html;charset=gbk");
+
+		response.setContentType("application/json");
+		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		
-		try{
 
-
-		
 		String action_class = request.getParameter("action_class");
+		JSONObject jsonObject;
 		
-		if(!action_class.equals(""))
-		{
-			ActionInterface action = (ActionInterface) Class.forName(action_class)
+		try {
+			Action actionClass = (Action) Class.forName(action_class)
 					.newInstance();
-			out.print(action.getResult(request));
+			jsonObject = actionClass.getResult(request);
+			out.print(jsonObject);
+		} catch(Exception e) {
+			out.print("{\"RC\":\"-1\"}");
 		}
-		
-		}catch(Exception e)
-		{
-			e.printStackTrace(out);
-		}
-		
-
-		
-
-		
-		
-
-
 	}
 
 	/**
