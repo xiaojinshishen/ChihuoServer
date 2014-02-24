@@ -4,14 +4,13 @@
         "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <!-- Database connection settings -->
+        <!-- Database connection settings 
         <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <!--  <property name="connection.url">jdbc:mysql://w.rdc.sae.sina.com.cn:3307/app_hbmtest</property>
-        <property name="connection.username">kl534lx30y</property>
+         <property name="connection.username">kl534lx30y</property>
         <property name="connection.password">mmwykwz0kx0zykihhw5w1khyyw4zhzk30i5ilz21</property>
         -->
         
-        <property name="connection.url">jdbc:mysql://localhost:3306/hibernate</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/app_hbmtest</property>
         <property name="connection.username">root</property>
         <property name="connection.password">a68858215</property>
 
@@ -43,5 +42,6 @@
         <!-- Drop and re-create the database schema on startup -->
       <!--    <property name="hbm2ddl.auto">update</property>-->
         <mapping resource="com/model/myTest.hbm.xml"/>
+        <mapping resource="com/model/userInfo.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>
