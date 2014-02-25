@@ -21,4 +21,6 @@ public class UserAction extends Action{
 //		String password = request.getParameter("password");
 		return jsonObject;
 	}
+	
+	
 }

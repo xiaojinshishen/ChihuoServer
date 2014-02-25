@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.model">
+
+ <class name="userInfo" table="user_info">
+        <id name="user_id" />
+        
+        <property name="user_name"/>
+        <property name="user_password"/>
+        <property name="user_type" >
+        <column name="user_type" length="20" default="customer" />
+        </property> 
+        <property name="user_sex"/>
+        <property name="user_birthday"/>
+        <property name="date_time"/>
+        
+    </class>
+
+</hibernate-mapping>
