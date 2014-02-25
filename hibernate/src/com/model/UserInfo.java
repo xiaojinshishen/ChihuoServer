@@ -1,6 +1,6 @@
 package com.model;
 
-public class userInfo implements java.io.Serializable{
+public class UserInfo implements java.io.Serializable{
 	
 	private String user_id;
 	private String user_password;

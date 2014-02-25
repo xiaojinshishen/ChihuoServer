@@ -15,7 +15,6 @@ import net.sf.json.JSONObject;
 import com.action.Action;
 
 
-
 @SuppressWarnings("serial")
 
 public class mainServlet extends HttpServlet {
@@ -48,7 +47,7 @@ public class mainServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("application/json");
+		response.setContentType("text/html");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 

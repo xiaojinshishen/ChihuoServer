@@ -5,17 +5,17 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
-import com.model.myTest;
-import com.model.userInfo;
+import com.code.OC;
+import com.model.UserInfo;
 import com.util.hibernateUtil;
 
-public class userInfoDao {
+public class UserInfoDao {
 	
-	public int Insert(String id,String psw)   
+	public int insert(String id,String psw)   
 	{
 		try
 		{
-		userInfo user = new userInfo();
+		UserInfo user = new UserInfo();
 		user.setUser_id(id);
 	
 		user.setUser_password(psw);
@@ -27,26 +27,26 @@ public class userInfoDao {
 		session.getTransaction().commit();
 		session.close();
 		
-		return 0;
+		return OC.SUCCESS;
 		
 		}catch(Exception e)
 		{
 			
 			
 		
-			return 1;
+			return OC.FAILIED;
 		}
 	}
 	
-	public userInfo getById(String id)
+	public UserInfo getById(String id)
 	{
 		try{
 		SessionFactory sf = hibernateUtil.getSessionFactory();
 		Session session = sf.openSession();   
-		Criteria cr = session.createCriteria(userInfo.class);  //创建Criteria对象 
+		Criteria cr = session.createCriteria(UserInfo.class);  //创建Criteria对象 
 		java.util.List list = cr.add(Restrictions.eq("user_id", id)).list();   //添加查询条件，并获取结果集
 		  
-		userInfo user = (userInfo)list.get(0);
+		UserInfo user = (UserInfo)list.get(0);
 		
 		return user;
 		}catch(Exception e)
@@ -55,7 +55,7 @@ public class userInfoDao {
 		}
 	}
 	
-	public int Update(userInfo user)
+	public int update(UserInfo user)
 	{
 		try
 		{
@@ -67,11 +67,11 @@ public class userInfoDao {
 		session.getTransaction().commit();
 		session.close();
 		
-		return 0;
+		return OC.SUCCESS;
 		
 		}catch(Exception e)
 		{
-			return 1;
+			return OC.FAILIED;
 		}
 	}
 	
