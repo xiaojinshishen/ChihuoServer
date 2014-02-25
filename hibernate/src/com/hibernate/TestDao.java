@@ -12,7 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import com.model.myTest;
 import com.util.hibernateUtil;
 
-public class testDao {
+public class TestDao {
 	
 	public boolean Insert(int id,String name,String password) 
 	{
