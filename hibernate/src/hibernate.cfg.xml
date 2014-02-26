@@ -44,5 +44,6 @@
         <mapping resource="com/model/myTest.hbm.xml"/>
         <mapping resource="com/model/userInfo.hbm.xml"/>
         <mapping resource="com/model/UserLabel.hbm.xml"/>
+        <mapping resource="com/model/UserLocation.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

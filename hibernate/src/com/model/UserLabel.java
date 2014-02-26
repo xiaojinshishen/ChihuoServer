@@ -16,6 +16,11 @@ public class UserLabel implements java.io.Serializable{
 	private String user_label_value5;
 	
 	
+	public UserLabel()
+	{
+		
+	}
+	
 	public String getUser_id() {
 		return user_id;
 	}

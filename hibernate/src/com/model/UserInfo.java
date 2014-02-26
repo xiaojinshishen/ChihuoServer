@@ -11,7 +11,11 @@ public class UserInfo implements java.io.Serializable{
 	private String date_time;
 	
 	
-	
+    public UserInfo()
+    {
+    	
+    }
+    
 	public String getUser_id() {
 		return user_id;
 	}
