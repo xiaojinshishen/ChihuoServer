@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.code.OC;
 import com.code.RC;
-
 
 import net.sf.json.JSONObject;
 
@@ -16,15 +16,17 @@ public abstract class Action {
 	protected JSONObject jsonObject = new JSONObject();
 
 	public JSONObject getResult(HttpServletRequest request) {
-		jsonObject.element("RC", RC.SUCCESS);
-		jsonObject.element("action_class", request.getParameter("action_class"));
+		jsonObject.put("RC", RC.SUCCESS);
+		jsonObject.put("OC", OC.FAILIED);
 		this.request = request;
+		String action = request.getParameter("action");
+		Method method;
 		try {
-			Method method = this.getClass().getDeclaredMethod(request.getParameter("action"));
+			method = this.getClass().getDeclaredMethod(action);
+			method.setAccessible(true);
 			method.invoke(this);
-			jsonObject.element("action", request.getParameter("action"));
 		} catch (Exception e) {
-			jsonObject.element("RC", RC.NO_SUCH_METHOD);
+			jsonObject.put("RC", RC.NO_SUCH_METHOD);
 		}
 		return jsonObject;
 	}
