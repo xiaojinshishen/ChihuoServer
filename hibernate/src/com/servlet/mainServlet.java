@@ -60,7 +60,7 @@ public class mainServlet extends HttpServlet {
 			jsonObject = actionClass.getResult(request);
 			out.print(jsonObject);
 		} catch(Exception e) {
-			out.print("{\"RC\":\"-1\"}");
+			out.print("{\"RC\":\"1\"}");
 		}
 	}
 
