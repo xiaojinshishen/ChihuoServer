@@ -11,6 +11,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.code.OC;
 import com.model.Location;
+import com.model.UserInfo;
 import com.model.UserLabel;
 import com.model.UserLocation;
 import com.util.hibernateUtil;
@@ -59,6 +60,8 @@ public class UserLocationDao {
 		location.setLatitude(ul.getLatitude());
 		location.setLongitude(ul.getLongitude());
 		
+		session.close();
+		
 		
 		return location;
 		}catch(Exception e)
@@ -67,18 +70,19 @@ public class UserLocationDao {
 		}
 	}
 	
-	public List<UserLocation> getTrajectory(String id)
+	public List getTrajectory(String id)
 	{
 		try{
 		SessionFactory sf = hibernateUtil.getSessionFactory();
 		Session session = sf.openSession();   
 		String sql = "select * from user_location where user_id='"+id+"' order by date_time desc limit 5";
-		Query query = session.createSQLQuery(sql).addEntity(UserLocation.class);
-		List<UserLocation> list = new ArrayList<UserLocation>();
+		List list = session.createSQLQuery(sql).addEntity(UserLocation.class).list();
+		//List<UserLocation> list = new ArrayList<UserLocation>();
 		
-		list = query.list();  
+		//list = query.list();  
 		
-		System.out.println(query.list().get(2));
+		session.close();
+		
 
 		
 		

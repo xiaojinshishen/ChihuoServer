@@ -27,11 +27,10 @@ public class testAction extends Action{
 		
 		List<UserLocation> list = new ArrayList<UserLocation>();
 		list = ud.getTrajectory(id);
-		for(int i=0;i<list.size();i++)
-		{
-			System.out.println(list.get(i).getLatitude());
-			System.out.println(list.get(i).getLongitude());
-		}
+
+		System.out.println(list.get(0).getLatitude());
+		System.out.println(list.get(1).getLatitude());
+		
 		
 		
 

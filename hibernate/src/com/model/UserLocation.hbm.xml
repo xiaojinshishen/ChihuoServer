@@ -5,10 +5,12 @@
 <hibernate-mapping package="com.model">
 
  <class name="UserLocation" table="user_location">
-        <id name="user_id" />
+        <composite-id>
         
-        <property name="longitude"/>
-        <property name="latitude"/>
+        <key-property name="longitude"/>
+        <key-property name="latitude"/>
+        
+        </composite-id>
     
         
     </class>
