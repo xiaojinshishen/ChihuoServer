@@ -41,8 +41,35 @@ public class UserCommentDao {
 	{
 		try{
 			SessionFactory sf = hibernateUtil.getSessionFactory();
-			Session session = sf.openSession();   
+			Session session = sf.openSession();
+			
+			
 			String sql = "select * from user_comment where dish_id="+dish_id+" and date_time>'"+lasttime+"' order by date_time desc limit 10";
+			List list = session.createSQLQuery(sql).addEntity(UserComment.class).list();
+			//List<UserLocation> list = new ArrayList<UserLocation>();
+			
+			//list = query.list();  
+			
+			session.close();
+			
+
+			
+			
+			return list;
+			}catch(Exception e)
+			{
+				return null;
+			}
+	}
+	
+	public List<UserComment> getByDishId(int dish_id)
+	{
+		try{
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			Session session = sf.openSession();
+			
+			
+			String sql = "select * from user_comment where dish_id="+dish_id+" order by date_time desc limit 10";
 			List list = session.createSQLQuery(sql).addEntity(UserComment.class).list();
 			//List<UserLocation> list = new ArrayList<UserLocation>();
 			
