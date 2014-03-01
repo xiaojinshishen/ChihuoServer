@@ -2,19 +2,44 @@ package com.model;
 
 public class UserComment implements java.io.Serializable{
 	
+	private int comment_id;
 	private String user_id;
 	private int dish_id;
 	private String visible="show";
-	private String comment;
+	private String user_comment;
+	private String date_time;
 	
 	
-	public String getComment() {
-		return comment;
+	public String getDate_time() {
+		return date_time;
 	}
 
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setDate_time(String date_time) {
+		this.date_time = date_time;
+	}
+
+
+	public int getComment_id() {
+		return comment_id;
+	}
+
+
+	public void setComment_id(int comment_id) {
+		this.comment_id = comment_id;
+	}
+
+
+	
+
+
+	public String getUser_comment() {
+		return user_comment;
+	}
+
+
+	public void setUser_comment(String user_comment) {
+		this.user_comment = user_comment;
 	}
 
 

@@ -5,11 +5,13 @@
 <hibernate-mapping package="com.model">
 
  <class name="UserComment" table="user_comment">
-        <id name="user_id" />
-        
+        <id name="comment_id" />
+       
+        <property name="user_id"/>
         <property name="dish_id"/>
-        <property name="comment"/>
+        <property name="user_comment"/>
         <property name="visible" />
+        <property name="date_time" />
       
         
     </class>

@@ -7,9 +7,11 @@ import java.util.List;
 import net.sf.json.JSONObject;
 
 import com.action.Action;
+import com.hibernate.UserCommentDao;
 import com.hibernate.UserInfoDao;
 import com.hibernate.UserLocationDao;
 import com.model.Location;
+import com.model.UserComment;
 import com.model.UserInfo;
 import com.model.UserLocation;
 
@@ -22,14 +24,20 @@ public class testAction extends Action{
 	}
 
 	public JSONObject register() {
-		String id = request.getParameter("user_id");
-		UserLocationDao ud = new UserLocationDao();
+		String id = request.getParameter("dish_id");
+		UserCommentDao uc = new UserCommentDao();
+		//UserComment ut = new UserComment();
+		//ut.setDish_id(Integer.parseInt(id));
+	//	ut.setUser_comment("test");
+	//	ut.setUser_id("xiaojin");
 		
-		List<UserLocation> list = new ArrayList<UserLocation>();
-		list = ud.getTrajectory(id);
+		//uc.Insert(ut);
+		
+		List<UserComment> list = new ArrayList<UserComment>();
+		list = uc.getByDishId(Integer.parseInt(id), "2014-03-01 21:39:16");
 
-		System.out.println(list.get(0).getLatitude());
-		System.out.println(list.get(1).getLatitude());
+		System.out.println(list.get(0).getDate_time());
+		
 		
 		
 		
