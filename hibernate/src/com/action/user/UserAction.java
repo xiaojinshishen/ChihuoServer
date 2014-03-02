@@ -1,6 +1,8 @@
 package com.action.user;
 
 
+import net.sf.json.JSONObject;
+
 import com.action.Action;
 import com.code.OC;
 import com.code.RC;
@@ -62,7 +64,7 @@ public class UserAction extends Action {
 			return;
 		}
 		jsonObject.put("OC", OC.SUCCESS);
-		jsonObject.put("user_info", userInfo);
+		jsonObject.put("user_info", JSONObject.fromObject(userInfo));
 	}
 	
 	public void updateUserInfo() {
