@@ -26,7 +26,6 @@ public class UserLocationAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserLocationDao userLocationDao = new UserLocationDao();
 		jsonObject.put("OC", OC.FAILIED);
 	}
 }
