@@ -26,6 +26,7 @@ public class UserLocationAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
+		;;;;;;;;;;
 		jsonObject.put("OC", OC.FAILIED);
 	}
 }
