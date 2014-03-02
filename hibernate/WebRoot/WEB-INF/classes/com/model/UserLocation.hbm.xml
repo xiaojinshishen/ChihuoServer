@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.model">
+
+ <class name="UserLocation" table="user_location">
+        <composite-id>
+        
+        <key-property name="longitude"/>
+        <key-property name="latitude"/>
+        
+        </composite-id>
+    
+        
+    </class>
+
+</hibernate-mapping>

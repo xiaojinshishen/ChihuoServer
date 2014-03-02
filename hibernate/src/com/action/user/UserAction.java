@@ -1,8 +1,6 @@
 package com.action.user;
 
 
-import net.sf.json.JSONObject;
-
 import com.action.Action;
 import com.code.OC;
 import com.code.RC;
@@ -21,8 +19,7 @@ public class UserAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfoDao userInfoDao = new UserInfoDao();
-		jsonObject.put("OC", userInfoDao.insert(id, psw));
+		jsonObject.put("OC", new UserInfoDao().insert(id, psw));
 	}
 
 	public void login() {
@@ -34,8 +31,7 @@ public class UserAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfoDao userInfoDao = new UserInfoDao();
-		UserInfo userInfo = userInfoDao.getById(id);
+		UserInfo userInfo = new UserInfoDao().getById(id);
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
@@ -56,8 +52,7 @@ public class UserAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfoDao userInfoDao = new UserInfoDao();
-		UserInfo userInfo = userInfoDao.getById(id);
+		UserInfo userInfo = new UserInfoDao().getById(id);
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
@@ -68,6 +63,23 @@ public class UserAction extends Action {
 		}
 		jsonObject.put("OC", OC.SUCCESS);
 		jsonObject.put("user_info", userInfo);
+	}
+	
+	public void updateUserInfo() {
+		UserInfo userInfo = new UserInfo();
+		try {
+			userInfo.setUser_id(request.getParameter("user_id").trim());
+			userInfo.setUser_password(request.getParameter("user_password").trim());
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		userInfo.setUser_name(request.getParameter("user_name"));
+		userInfo.setUser_sex(request.getParameter("user_sex"));
+		userInfo.setUser_birthday(request.getParameter("user_birthday"));
+		userInfo.setUser_type(request.getParameter("customer"));
+		
+		jsonObject.put("OC", new UserInfoDao().update(userInfo));
 	}
 
 }

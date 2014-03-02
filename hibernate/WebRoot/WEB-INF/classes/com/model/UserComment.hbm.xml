@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.model">
+
+ <class name="UserComment" table="user_comment">
+        <id name="comment_id" />
+       
+        <property name="user_id"/>
+        <property name="dish_id"/>
+        <property name="user_comment"/>
+        <property name="visible" />
+        <property name="date_time" />
+      
+        
+    </class>
+
+</hibernate-mapping>
