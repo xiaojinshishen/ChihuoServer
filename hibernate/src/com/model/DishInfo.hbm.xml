@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.model">
+
+ <class name="DishInfo" table="dish_info">
+        <id name="dish_id" />
+       
+        <property name="dish_name"/>
+        <property name="dish_price"/>
+        <property name="restaurant_id"/>
+        <property name="restaurant_name" />
+        <property name="user_id" />
+        <property name="date_time" />
+      
+        
+    </class>
+
+</hibernate-mapping>
