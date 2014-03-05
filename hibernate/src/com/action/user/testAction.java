@@ -1,4 +1,3 @@
-/*test*/
 package com.action.user;
 
 
