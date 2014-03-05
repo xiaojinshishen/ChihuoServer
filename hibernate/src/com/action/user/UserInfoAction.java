@@ -10,7 +10,7 @@ import com.hibernate.UserInfoDao;
 import com.model.UserInfo;
 
 
-public class UserAction extends Action {
+public class UserInfoAction extends Action {
 
 	public void register() {
 		String id,psw;
