@@ -2,7 +2,10 @@ package com.action.user;
 
 import java.util.List;
 
+import net.sf.json.JSONObject;
+
 import com.action.Action;
+import com.code.OC;
 import com.code.RC;
 import com.hibernate.UserCommentDao;
 import com.model.UserComment;
@@ -31,5 +34,12 @@ public class UserCommentAction extends Action {
 			return;
 		}
 		List<UserComment> comments = new UserCommentDao().getByDishId(dish_id);
+		if (comments == null) {
+			jsonObject.put("OC", OC.FAILIED);
+		} else {
+			jsonObject.put("OC", OC.SUCCESS);
+			jsonObject.put("comment_count", comments.size());
+			jsonObject.put("comments", JSONObject.fromObject(comments));
+		}
 	}
 }
