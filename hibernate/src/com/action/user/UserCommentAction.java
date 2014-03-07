@@ -11,8 +11,8 @@ import com.hibernate.UserCommentDao;
 import com.model.UserComment;
 
 public class UserCommentAction extends Action {
-	
-	public void insert() {
+
+	public void addCommet() {
 		UserComment userComment = new UserComment();
 		try {
 			userComment.setUser_id(request.getParameter("user_id").trim());
@@ -24,8 +24,8 @@ public class UserCommentAction extends Action {
 		}
 		jsonObject.put("OC", new UserCommentDao().Insert(userComment));
 	}
-	
-	public void getByDishId() {
+
+	public void getCommentByDishId() {
 		int dish_id;
 		try {
 			dish_id = Integer.valueOf(request.getParameter("dish_id").trim());
@@ -33,7 +33,15 @@ public class UserCommentAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		List<UserComment> comments = new UserCommentDao().getByDishId(dish_id);
+		String last_time = request.getParameter("last_time");
+		
+		List<UserComment> comments;
+		if (last_time == null) {
+			comments = new UserCommentDao().getByDishId(dish_id);
+		} else {
+			comments = new UserCommentDao().getByDishId(dish_id, last_time);
+		}
+		
 		if (comments == null) {
 			jsonObject.put("OC", OC.FAILIED);
 		} else {
