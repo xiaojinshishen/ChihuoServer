@@ -6,10 +6,10 @@
 
  <class name="UserLocation" table="user_location">
         <composite-id>
-        
+        <key-property name="user_id"/>
         <key-property name="longitude"/>
         <key-property name="latitude"/>
-        
+        <key-property name="date_time"/>
         </composite-id>
     
         

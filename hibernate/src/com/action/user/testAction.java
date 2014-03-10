@@ -7,9 +7,11 @@ import java.util.List;
 import net.sf.json.JSONObject;
 
 import com.action.Action;
+import com.hibernate.DishLabelInfoDao;
 import com.hibernate.UserCommentDao;
 import com.hibernate.UserInfoDao;
 import com.hibernate.UserLocationDao;
+import com.model.DishLabelInfo;
 import com.model.Location;
 import com.model.UserComment;
 import com.model.UserInfo;
@@ -24,21 +26,16 @@ public class testAction extends Action{
 	}
 
 	public JSONObject register() {
-		String id = request.getParameter("dish_id");
-		UserCommentDao uc = new UserCommentDao();
-		//UserComment ut = new UserComment();
-		//ut.setDish_id(Integer.parseInt(id));
-	//	ut.setUser_comment("test");
-	//	ut.setUser_id("xiaojin");
 		
-		//uc.Insert(ut);
+		DishLabelInfoDao dd = new DishLabelInfoDao(); 
+		DishLabelInfo di = new DishLabelInfo();
+		//di.setDish_id(1);
+	//	di.setDish_label("test1");
 		
-		List<UserComment> list = new ArrayList<UserComment>();
-		list = uc.getByDishId(Integer.parseInt(id), "2014-03-01 21:39:16");
+		//dd.Insert(di);
+		dd.deleteByDishId(1);
+		//dd.Delete(1, "test");
 
-		System.out.println(list.get(0).getDate_time());
-		
-		
 		
 		
 

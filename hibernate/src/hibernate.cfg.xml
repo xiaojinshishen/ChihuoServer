@@ -47,5 +47,6 @@
         <mapping resource="com/model/UserLocation.hbm.xml"/>
         <mapping resource="com/model/UserComment.hbm.xml"/>
         <mapping resource="com/model/DishInfo.hbm.xml"/>
+        <mapping resource="com/model/DishLabelInfo.hbm.xml"/>
     </session-factory>
 </hibernate-configuration>

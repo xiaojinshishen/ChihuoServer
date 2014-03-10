@@ -24,8 +24,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <form action ="main">
-    dish_id：<input type="text" name="dish_id" id="dish_id">
-    密码：<input type="text" name="user_password" id="user_passwod">
+    dish_id：<input type="text" name="user_id" id="user_id">
+    密码：<input type="text" name="psw" id="psw">
     <input type="hidden" name="action_class" id="action_class" value="com.action.user.testAction">
     <input type="hidden" name ="action" id="action" value="register">
     <input type="submit" value="提交">
