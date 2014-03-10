@@ -140,9 +140,9 @@ public class DishLabelInfoDao {
 		SessionFactory sf = hibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();
-		DishLabelInfo di = new DishLabelInfo();
-		di = (DishLabelInfo)session.get(DishLabelInfo.class, label);
-		session.delete(di);
+		Query query = session.createQuery("delete DishLabelInfo where dish_label=?");
+		query.setString(0, label);
+		query.executeUpdate();
 		session.getTransaction().commit();
 		session.close();
 		
@@ -162,7 +162,7 @@ public class DishLabelInfoDao {
 		SessionFactory sf = hibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		session.beginTransaction();
-		Query query = session.createQuery("delete from dish_label_info where dish_id=? and dish_label=?");
+		Query query = session.createQuery("delete DishLabelInfo where dish_id=? and dish_label=?");
 		query.setInteger(0, dish_id);
 		query.setString(1, label);
 		query.executeUpdate();

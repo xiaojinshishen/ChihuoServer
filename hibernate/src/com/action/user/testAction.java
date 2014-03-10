@@ -33,7 +33,7 @@ public class testAction extends Action{
 	//	di.setDish_label("test1");
 		
 		//dd.Insert(di);
-		dd.deleteByDishId(1);
+		dd.Delete(1, "test1");
 		//dd.Delete(1, "test");
 
 		
