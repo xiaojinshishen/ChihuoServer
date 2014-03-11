@@ -46,10 +46,9 @@ public class UserInfoAction extends Action {
 	}
 
 	public void getUserInfo() {
-		String id,psw;
+		String id;
 		try {
 			id = request.getParameter("user_id").trim();
-			psw = request.getParameter("user_password").trim();
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
@@ -57,10 +56,6 @@ public class UserInfoAction extends Action {
 		UserInfo userInfo = new UserInfoDao().getById(id);
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
-			return;
-		}
-		if (userInfo.getUser_password() != psw) {
-			jsonObject.put("OC", OC.WRONG_PASSWORD);
 			return;
 		}
 		jsonObject.put("OC", OC.SUCCESS);
