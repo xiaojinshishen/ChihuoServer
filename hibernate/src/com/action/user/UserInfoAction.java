@@ -59,7 +59,12 @@ public class UserInfoAction extends Action {
 			return;
 		}
 		jsonObject.put("OC", OC.SUCCESS);
-		jsonObject.put("user_info", JSONObject.fromObject(userInfo));
+		jsonObject.put("user_id", userInfo.getUser_id());
+		jsonObject.put("user_name", userInfo.getUser_name());
+		jsonObject.put("user_type", userInfo.getUser_type());
+		jsonObject.put("user_sex", userInfo.getUser_sex());
+		jsonObject.put("user_birthday", userInfo.getUser_birthday());
+		jsonObject.put("date_time", userInfo.getDate_time());
 	}
 	
 	public void updateUserInfo() {
