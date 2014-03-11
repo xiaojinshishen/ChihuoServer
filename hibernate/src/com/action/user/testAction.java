@@ -27,15 +27,21 @@ public class testAction extends Action{
 
 	public JSONObject register() {
 		
-		DishLabelInfoDao dd = new DishLabelInfoDao(); 
-		DishLabelInfo di = new DishLabelInfo();
+		//DishLabelInfoDao dd = new DishLabelInfoDao(); 
+		//DishLabelInfo di = new DishLabelInfo();
 		//di.setDish_id(1);
 	//	di.setDish_label("test1");
 		
 		//dd.Insert(di);
-		dd.Delete(1, "test1");
+		//dd.Delete(1, "test1");
 		//dd.Delete(1, "test");
-
+        UserInfoDao ud = new UserInfoDao();
+        UserInfo ui = new UserInfo();
+     //   ui.setUser_id("hehe");
+    //    ui.setUser_password("123456789");
+    //    ud.update(ui);
+        ui = ud.getById("hehe");
+        System.out.print(ui.getUser_password());
 		
 		
 

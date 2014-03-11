@@ -38,11 +38,12 @@ public class UserInfoAction extends Action {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
 		}
-		if (userInfo.getUser_password() != psw) {
+		if (userInfo.getUser_password().equals(psw)) {
+			jsonObject.put("OC", OC.SUCCESS);
+		} else {
 			jsonObject.put("OC", OC.WRONG_PASSWORD);
-			return;
 		}
-		jsonObject.put("OC", OC.SUCCESS);
+		jsonObject.put("OC", userInfo.getUser_password());
 	}
 
 	public void getUserInfo() {

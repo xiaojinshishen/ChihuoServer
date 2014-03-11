@@ -47,6 +47,7 @@
         <mapping resource="com/model/UserComment.hbm.xml"/>
         <mapping resource="com/model/DishInfo.hbm.xml"/>
         <mapping resource="com/model/DishLabelInfo.hbm.xml"/>
+        <mapping resource="com/model/DishLabelRecord.hbm.xml"/>
     </session-factory>
 
 

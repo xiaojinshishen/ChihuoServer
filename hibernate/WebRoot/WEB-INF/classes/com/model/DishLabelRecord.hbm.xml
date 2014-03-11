@@ -13,7 +13,7 @@
             <key-property name="dish_id"/>
             <key-property name="label_name" />
         </composite-id>
-        <property name="dish_Label_value"/>
+        <property name="dish_label_value"/>
         <property name="date_time" />
     </class>
 </hibernate-mapping>
