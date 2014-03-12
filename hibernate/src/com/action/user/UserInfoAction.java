@@ -1,8 +1,6 @@
 package com.action.user;
 
 
-import net.sf.json.JSONObject;
-
 import com.action.Action;
 import com.code.OC;
 import com.code.RC;
@@ -43,7 +41,6 @@ public class UserInfoAction extends Action {
 		} else {
 			jsonObject.put("OC", OC.WRONG_PASSWORD);
 		}
-		jsonObject.put("OC", userInfo.getUser_password());
 	}
 
 	public void getUserInfo() {
