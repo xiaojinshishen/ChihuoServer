@@ -5,38 +5,43 @@ import com.action.Action;
 import com.code.OC;
 import com.code.RC;
 import com.hibernate.UserInfoDao;
+import com.hibernate.UserLabelDao;
 import com.model.UserInfo;
+import com.model.UserLabel;
 
 
 public class UserInfoAction extends Action {
 
 	public void register() {
-		String id,psw;
+		String user_id,user_password;
 		try {
-			id = request.getParameter("user_id").trim();
-			psw = request.getParameter("user_password").trim();
+			user_id = request.getParameter("user_id").trim();
+			user_password = request.getParameter("user_password").trim();
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		jsonObject.put("OC", new UserInfoDao().insert(id, psw));
+		jsonObject.put("OC", new UserInfoDao().insert(user_id, user_password));
+		UserLabel userLabel = new UserLabel();
+		userLabel.setUser_id(user_id);
+		new UserLabelDao().insert(userLabel);
 	}
 
 	public void login() {
-		String id,psw;
+		String user_id,user_password;
 		try {
-			id = request.getParameter("user_id").trim();
-			psw = request.getParameter("user_password").trim();
+			user_id = request.getParameter("user_id").trim();
+			user_password = request.getParameter("user_password").trim();
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfo userInfo = new UserInfoDao().getById(id);
+		UserInfo userInfo = new UserInfoDao().getById(user_id);
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
 		}
-		if (userInfo.getUser_password().equals(psw)) {
+		if (userInfo.getUser_password().equals(user_password)) {
 			jsonObject.put("OC", OC.SUCCESS);
 		} else {
 			jsonObject.put("OC", OC.WRONG_PASSWORD);
@@ -44,14 +49,14 @@ public class UserInfoAction extends Action {
 	}
 
 	public void getUserInfo() {
-		String id;
+		String user_id;
 		try {
-			id = request.getParameter("user_id").trim();
+			user_id = request.getParameter("user_id").trim();
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfo userInfo = new UserInfoDao().getById(id);
+		UserInfo userInfo = new UserInfoDao().getById(user_id);
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
