@@ -3,17 +3,29 @@ package com.action.user;
 import com.action.Action;
 import com.code.OC;
 import com.code.RC;
+import com.hibernate.UserInfoDao;
 import com.hibernate.UserLabelDao;
+import com.model.UserInfo;
 import com.model.UserLabel;
 
 public class UserLabelAction extends Action {
 	
 	public void insert() {
 		UserLabel userLabel = new UserLabel();
+		String psw;
 		try {
 			userLabel.setUser_id(request.getParameter("user_id").trim());
+			psw = request.getParameter("user_password").trim();
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		UserInfo userInfo = new UserInfoDao().getById(userLabel.getUser_id());
+		if (userInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
+			return;
+		} else if (userInfo.getUser_password() != psw) {
+			jsonObject.put("OC", OC.WRONG_PASSWORD);
 			return;
 		}
 		userLabel.setUser_label1(request.getParameter("user_label1"));
@@ -49,10 +61,20 @@ public class UserLabelAction extends Action {
 	
 	public void update() {
 		UserLabel userLabel = new UserLabel();
+		String psw;
 		try {
 			userLabel.setUser_id(request.getParameter("user_id").trim());
+			psw = request.getParameter("user_password").trim();
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		UserInfo userInfo = new UserInfoDao().getById(userLabel.getUser_id());
+		if (userInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
+			return;
+		} else if (userInfo.getUser_password() != psw) {
+			jsonObject.put("OC", OC.WRONG_PASSWORD);
 			return;
 		}
 		userLabel.setUser_label1(request.getParameter("user_label1"));
