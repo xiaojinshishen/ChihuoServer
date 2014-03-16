@@ -22,9 +22,13 @@ public class UserInfoAction extends Action {
 			return;
 		}
 		jsonObject.put("OC", new UserInfoDao().insert(user_id, user_password));
-		UserLabel userLabel = new UserLabel();
-		userLabel.setUser_id(user_id);
-		new UserLabelDao().insert(userLabel);
+		try {
+			UserLabel userLabel = new UserLabel();
+			userLabel.setUser_id(user_id);
+			new UserLabelDao().insert(userLabel);
+		} catch(Exception e) {
+
+		}
 	}
 
 	public void login() {
@@ -69,7 +73,7 @@ public class UserInfoAction extends Action {
 		jsonObject.put("user_birthday", userInfo.getUser_birthday());
 		jsonObject.put("date_time", userInfo.getDate_time());
 	}
-	
+
 	public void updateUserInfo() {
 		UserInfo userInfo = new UserInfo();
 		try {
@@ -83,7 +87,7 @@ public class UserInfoAction extends Action {
 		userInfo.setUser_sex(request.getParameter("user_sex"));
 		userInfo.setUser_birthday(request.getParameter("user_birthday"));
 		userInfo.setUser_type(request.getParameter("customer"));
-		
+
 		jsonObject.put("OC", new UserInfoDao().update(userInfo));
 	}
 
