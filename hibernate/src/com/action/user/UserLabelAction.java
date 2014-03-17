@@ -41,7 +41,7 @@ public class UserLabelAction extends Action {
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
-		} else if (userInfo.getUser_password() != psw) {
+		} else if (userInfo.getUser_password().equals(psw)) {
 			jsonObject.put("OC", OC.WRONG_PASSWORD);
 			return;
 		}
