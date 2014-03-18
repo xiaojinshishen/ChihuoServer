@@ -43,8 +43,6 @@ public class UserLabelAction extends Action {
 			return;
 		}
 		if (!userInfo.getUser_password().equals(user_password)) {
-			jsonObject.put("password1", userInfo.getUser_password());
-			jsonObject.put("password2", user_password);
 			jsonObject.put("OC", OC.WRONG_PASSWORD);
 			return;
 		}
