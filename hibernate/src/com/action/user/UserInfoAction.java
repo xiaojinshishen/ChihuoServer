@@ -25,6 +25,16 @@ public class UserInfoAction extends Action {
 		try {
 			UserLabel userLabel = new UserLabel();
 			userLabel.setUser_id(user_id);
+			userLabel.setUser_label1("");
+			userLabel.setUser_label2("");
+			userLabel.setUser_label3("");
+			userLabel.setUser_label4("");
+			userLabel.setUser_label5("");
+			userLabel.setUser_label_value1("0");
+			userLabel.setUser_label_value1("0");
+			userLabel.setUser_label_value1("0");
+			userLabel.setUser_label_value1("0");
+			userLabel.setUser_label_value1("0");
 			new UserLabelDao().insert(userLabel);
 		} catch(Exception e) {
 
