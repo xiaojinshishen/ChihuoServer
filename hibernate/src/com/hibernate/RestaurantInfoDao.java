@@ -1,5 +1,7 @@
 package com.hibernate;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,6 +9,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.code.OC;
 
+import com.model.Location;
 import com.model.RestaurantInfo;
 import com.model.UserLabel;
 
@@ -73,4 +76,12 @@ public class RestaurantInfoDao {
 			}
 		
 	}
+	
+	public List getByLocation(Location location)
+	{
+		List list = null;
+		return list;
+	}
+	
+	
 }
