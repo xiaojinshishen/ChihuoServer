@@ -6,6 +6,7 @@
 
 bin/
 tmp/
+*.class
 *.tmp
 *.bak
 *.swp
