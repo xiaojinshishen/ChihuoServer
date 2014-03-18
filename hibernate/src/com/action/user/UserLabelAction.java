@@ -29,10 +29,10 @@ public class UserLabelAction extends Action {
 	
 	public void update() {
 		UserLabel userLabel = new UserLabel();
-		String psw;
+		String user_password;
 		try {
 			userLabel.setUser_id(request.getParameter("user_id").trim());
-			psw = request.getParameter("user_password").trim();
+			user_password = request.getParameter("user_password").trim();
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
@@ -41,7 +41,8 @@ public class UserLabelAction extends Action {
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
-		} else if (userInfo.getUser_password().equals(psw)) {
+		}
+		if (!userInfo.getUser_password().equals(user_password)) {
 			jsonObject.put("OC", OC.WRONG_PASSWORD);
 			return;
 		}
