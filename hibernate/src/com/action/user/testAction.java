@@ -9,12 +9,14 @@ import net.sf.json.JSONObject;
 import com.action.Action;
 import com.hibernate.DishHistoryDao;
 import com.hibernate.DishLabelInfoDao;
+import com.hibernate.RestaurantInfoDao;
 import com.hibernate.UserCommentDao;
 import com.hibernate.UserInfoDao;
 import com.hibernate.UserLocationDao;
 import com.model.DishHistory;
 import com.model.DishLabelInfo;
 import com.model.Location;
+import com.model.RestaurantInfo;
 import com.model.UserComment;
 import com.model.UserInfo;
 import com.model.UserLocation;
@@ -45,12 +47,15 @@ public class testAction extends Action{
      //   ui = ud.getById("hehe");
       //  System.out.print(ui.getUser_password());
 		
-		DishHistoryDao dd = new DishHistoryDao();
+		RestaurantInfoDao dd = new RestaurantInfoDao();
 		
-		List<DishHistory> list = dd.getByUserId("xiaojin");
+		Location location = new Location();
+		location.setLatitude(2);
+		location.setLongitude(1);
+		List<RestaurantInfo> list = dd.getByLocation(location);
 		for(int i=0;i<list.size();i++)
 		{
-			System.out.println(list.get(i).getDish_id());
+			System.out.println(list.get(i).getRestaurant_name());
 		}
 
 		

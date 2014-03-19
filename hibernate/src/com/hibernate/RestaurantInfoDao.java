@@ -11,7 +11,7 @@ import com.code.OC;
 
 import com.model.Location;
 import com.model.RestaurantInfo;
-import com.model.UserLabel;
+
 
 import com.util.hibernateUtil;
 
@@ -79,8 +79,25 @@ public class RestaurantInfoDao {
 	
 	public List getByLocation(Location location)
 	{
-		List list = null;
-		return list;
+		try{
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			Session session = sf.openSession();   
+			String sql = "select * from restaurant_info where sqrt(((("+location.getLongitude()+"-longitude)*PI()*12656*cos((("+location.getLatitude()+"+latitude)/2)*PI()/180)/180)*(("+location.getLongitude()+"-longitude)*PI()*12656*cos ((("+location.getLatitude()+"+latitude)/2)*PI()/180)/180))+((("+location.getLatitude()+"-latitude)*PI()*12656/180)*(("+location.getLatitude()+"-latitude)*PI()*12656/180)))<2";  
+			List list = session.createSQLQuery(sql).addEntity(RestaurantInfo.class).list();
+			//List<UserLocation> list = new ArrayList<UserLocation>();
+			
+			//list = query.list();  
+			
+			session.close();
+			
+
+			
+			
+			return list;
+			}catch(Exception e)
+			{
+				return null;
+			}
 	}
 	
 	
