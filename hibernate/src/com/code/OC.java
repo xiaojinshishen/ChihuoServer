@@ -6,4 +6,5 @@ public final class OC {
 	public static final int UNKNOWN_USER_ID = 2;
 	public static final int WRONG_PASSWORD = 3;
 	public static final int INSUFFICIENT_PRIVILEGES = 4;
+	public static final int UNKNOWN_RESTAURANT_ID = 5;
 }
