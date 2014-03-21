@@ -9,7 +9,7 @@ import com.model.UserInfo;
 import com.model.UserLabel;
 
 public class UserLabelAction extends Action {
-	
+
 	public void getUserLabel() {
 		String id;
 		try {
@@ -24,9 +24,29 @@ public class UserLabelAction extends Action {
 			return;
 		}
 		jsonObject.put("OC", OC.SUCCESS);
-		jsonObject.put("user_label", userLabel);
+		jsonObject.put("user_id", userLabel.getUser_id());
+		if (userLabel.getUser_label1() != null) {
+			jsonObject.put("user_label1", userLabel.getUser_label1());
+			jsonObject.put("user_label_value1", userLabel.getUser_label_value1());
+		}
+		if (userLabel.getUser_label2() != null) {
+			jsonObject.put("user_label2", userLabel.getUser_label2());
+			jsonObject.put("user_label_value2", userLabel.getUser_label_value2());
+		}
+		if (userLabel.getUser_label3() != null) {
+			jsonObject.put("user_label3", userLabel.getUser_label3());
+			jsonObject.put("user_label_value3", userLabel.getUser_label_value3());
+		}
+		if (userLabel.getUser_label4() != null) {
+			jsonObject.put("user_label4", userLabel.getUser_label4());
+			jsonObject.put("user_label_value4", userLabel.getUser_label_value4());
+		}
+		if (userLabel.getUser_label5() != null) {
+			jsonObject.put("user_label5", userLabel.getUser_label5());
+			jsonObject.put("user_label_value5", userLabel.getUser_label_value5());
+		}
 	}
-	
+
 	public void update() {
 		UserLabel userLabel = new UserLabel();
 		String user_password;
@@ -56,7 +76,7 @@ public class UserLabelAction extends Action {
 		userLabel.setUser_label_value3(request.getParameter("user_label_value3"));
 		userLabel.setUser_label_value4(request.getParameter("user_label_value4"));
 		userLabel.setUser_label_value5(request.getParameter("user_label_value5"));
-		
+
 		jsonObject.put("OC", new UserLabelDao().update(userLabel));
 	}
 }
