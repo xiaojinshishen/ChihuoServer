@@ -51,7 +51,6 @@ public class RestaurantInfoAction extends Action {
 	
 	public void getRestaurantByLocation() {
 		double longitude, latitude;
-		boolean is_get_dish;
 		try {
 			longitude = Double.valueOf(request.getParameter("longitude").trim());
 			latitude = Double.valueOf(request.getParameter("latitude").trim());
@@ -63,12 +62,6 @@ public class RestaurantInfoAction extends Action {
 		location.setLongitude(longitude);
 		location.setLatitude(latitude);
 		
-		try {
-			is_get_dish = Boolean.valueOf(request.getParameter("is_get_dish").trim());
-		} catch (Exception e) {
-			is_get_dish = false;
-		}
-		
 		List<?> list = new RestaurantInfoDao().getByLocation(location);
 		if (list == null) {
 			jsonObject.put("OC", OC.FAILIED);
@@ -77,12 +70,6 @@ public class RestaurantInfoAction extends Action {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("restaurant_count", list.size());
 			jsonObject.put("restaurants", JSONObject.fromObject(list));
-		}
-		
-		if (is_get_dish) {
-			for (Object object : list) {
-				
-			}
 		}
 	}
 }
