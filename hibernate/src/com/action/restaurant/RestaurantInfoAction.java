@@ -36,7 +36,7 @@ public class RestaurantInfoAction extends Action {
 		} else if (!userInfo.getUser_password().equals(user_password)) {
 			jsonObject.put("OC", OC.WRONG_PASSWORD);
 			return;
-		} else if (userInfo.getUser_type() == "customer") {
+		} else if (userInfo.getUser_type().equals("customer")) {
 			jsonObject.put("OC", OC.INSUFFICIENT_PRIVILEGES);
 			return;
 		} else {
