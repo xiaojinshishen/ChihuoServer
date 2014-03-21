@@ -1,5 +1,7 @@
 package com.action.dish;
 
+import net.sf.json.JSONObject;
+
 import com.action.Action;
 import com.code.OC;
 import com.code.RC;
@@ -48,5 +50,24 @@ public class DishInfoAction extends Action {
 			dishInfo.setDish_price(0);
 		}
 		jsonObject.put("OC", new DishInfoDao().Insert(dishInfo));
+	}
+	
+	public void getByDishId() {
+		int dish_id;
+		try {
+			dish_id = Integer.valueOf(request.getParameter("dish_id").trim());
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		
+		DishInfo dishInfo = new DishInfoDao().getById(dish_id);
+		if (dishInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_DISH_ID);
+			return;
+		} else {
+			jsonObject.put("OC", OC.SUCCESS);
+			jsonObject.put("dish_info", JSONObject.fromObject(dishInfo));
+		}
 	}
 }
