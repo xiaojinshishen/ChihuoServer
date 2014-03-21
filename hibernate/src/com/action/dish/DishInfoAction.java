@@ -5,8 +5,10 @@ import com.code.OC;
 import com.code.RC;
 import com.hibernate.DishInfoDao;
 import com.hibernate.RestaurantInfoDao;
+import com.hibernate.UserInfoDao;
 import com.model.DishInfo;
 import com.model.RestaurantInfo;
+import com.model.UserInfo;
 
 public class DishInfoAction extends Action {
 	
@@ -24,6 +26,14 @@ public class DishInfoAction extends Action {
 		RestaurantInfo restaurantInfo = new RestaurantInfoDao().getById(restaurant_id);
 		if (restaurantInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_RESTAURANT_ID);
+			return;
+		}
+		UserInfo userInfo = new UserInfoDao().getById(user_id);
+		if (userInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
+			return;
+		} else if(userInfo.getUser_type().equals("customer")) {
+			jsonObject.put("OC", OC.INSUFFICIENT_PRIVILEGES);
 			return;
 		}
 		
