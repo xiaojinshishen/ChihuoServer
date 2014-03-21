@@ -1,6 +1,5 @@
 package com.action.dish;
 
-import net.sf.json.JSONObject;
 
 import com.action.Action;
 import com.code.OC;
@@ -13,7 +12,7 @@ import com.model.RestaurantInfo;
 import com.model.UserInfo;
 
 public class DishInfoAction extends Action {
-	
+
 	public void addDishInfo() {
 		String dish_name,user_id;
 		int restaurant_id;
@@ -38,7 +37,7 @@ public class DishInfoAction extends Action {
 			jsonObject.put("OC", OC.INSUFFICIENT_PRIVILEGES);
 			return;
 		}
-		
+
 		DishInfo dishInfo = new DishInfo();
 		dishInfo.setDish_name(dish_name);
 		dishInfo.setRestaurant_id(restaurant_id);
@@ -51,7 +50,7 @@ public class DishInfoAction extends Action {
 		}
 		jsonObject.put("OC", new DishInfoDao().Insert(dishInfo));
 	}
-	
+
 	public void getByDishId() {
 		int dish_id;
 		try {
@@ -60,14 +59,20 @@ public class DishInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		
+
 		DishInfo dishInfo = new DishInfoDao().getById(dish_id);
 		if (dishInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_DISH_ID);
 			return;
 		} else {
 			jsonObject.put("OC", OC.SUCCESS);
-			jsonObject.put("dish_info", JSONObject.fromObject(dishInfo));
+			jsonObject.put("dish_id", dishInfo.getDish_id());
+			jsonObject.put("dish_name", dishInfo.getDish_name());
+			jsonObject.put("dish_price", dishInfo.getRestaurant_id());
+			jsonObject.put("restaurant_id", dishInfo.getRestaurant_id());
+			jsonObject.put("restaurant_name", dishInfo.getRestaurant_name());
+			jsonObject.put("user_id", dishInfo.getUser_id());
+			jsonObject.put("date_time", dishInfo.getDate_time());
 		}
 	}
 }
