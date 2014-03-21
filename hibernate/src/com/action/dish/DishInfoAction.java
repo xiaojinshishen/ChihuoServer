@@ -13,7 +13,7 @@ import com.model.UserInfo;
 
 public class DishInfoAction extends Action {
 
-	public void addDishInfo() {
+	public void insert() {
 		String dish_name,user_id;
 		int restaurant_id;
 		try {
@@ -44,7 +44,7 @@ public class DishInfoAction extends Action {
 		dishInfo.setRestaurant_name(restaurantInfo.getRestaurant_name());
 		dishInfo.setUser_id(user_id);
 		try {
-			dishInfo.setDish_price(Double.valueOf(request.getParameter("dish_price")));
+			dishInfo.setDish_price(Double.valueOf(request.getParameter("dish_price").trim()));
 		} catch (Exception e) {
 			dishInfo.setDish_price(0);
 		}
@@ -74,5 +74,28 @@ public class DishInfoAction extends Action {
 			jsonObject.put("user_id", dishInfo.getUser_id());
 			jsonObject.put("date_time", dishInfo.getDate_time());
 		}
+	}
+	
+	public void update() {
+		int dish_id;
+		String dish_name;
+		double dish_price;
+		try {
+			dish_id = Integer.valueOf(request.getParameter("dish_id").trim());
+			dish_name = request.getParameter("dish_name");
+			dish_price = Double.valueOf(request.getParameter("dish_price").trim());
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		DishInfoDao dishInfoDao = new DishInfoDao();
+		DishInfo dishInfo = dishInfoDao.getById(dish_id);
+		if (dishInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_DISH_ID);
+			return;
+		}
+		dishInfo.setDish_name(dish_name);
+		dishInfo.setDish_price(dish_price);
+		jsonObject.put("OC", dishInfoDao.Update(dishInfo));
 	}
 }
