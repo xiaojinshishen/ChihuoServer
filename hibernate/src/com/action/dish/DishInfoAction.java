@@ -14,11 +14,12 @@ import com.model.UserInfo;
 public class DishInfoAction extends Action {
 
 	public void insert() {
-		String dish_name,user_id;
+		String dish_name,user_id,user_password;
 		int restaurant_id;
 		try {
 			dish_name = request.getParameter("dish_name").trim();
 			user_id = request.getParameter("user_id").trim();
+			user_password = request.getParameter("user_password").trim();
 			restaurant_id = Integer.valueOf(request.getParameter("restaurant_id").trim());
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
@@ -33,7 +34,10 @@ public class DishInfoAction extends Action {
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
-		} else if(userInfo.getUser_type().equals("customer")) {
+		} else if (!userInfo.getUser_password().equals(user_password)) {
+			jsonObject.put("OC", OC.WRONG_PASSWORD);
+			return;
+		}else if (userInfo.getUser_type().equals("customer")) {
 			jsonObject.put("OC", OC.INSUFFICIENT_PRIVILEGES);
 			return;
 		}
@@ -78,16 +82,31 @@ public class DishInfoAction extends Action {
 	
 	public void update() {
 		int dish_id;
-		String dish_name;
+		String dish_name, user_id, user_password;
 		double dish_price;
 		try {
 			dish_id = Integer.valueOf(request.getParameter("dish_id").trim());
-			dish_name = request.getParameter("dish_name");
+			dish_name = request.getParameter("dish_name").trim();
+			user_id = request.getParameter("user_id").trim();
+			user_password = request.getParameter("user_password").trim();
 			dish_price = Double.valueOf(request.getParameter("dish_price").trim());
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
+		
+		UserInfo userInfo = new UserInfoDao().getById(user_id);
+		if (userInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
+			return;
+		} else if (userInfo.getUser_password().equals(user_password)) {
+			jsonObject.put("OC", OC.WRONG_PASSWORD);
+			return;
+		} else if (userInfo.getUser_type().equals("customer")) {
+			jsonObject.put("OC", OC.INSUFFICIENT_PRIVILEGES);
+			return;
+		}
+		
 		DishInfoDao dishInfoDao = new DishInfoDao();
 		DishInfo dishInfo = dishInfoDao.getById(dish_id);
 		if (dishInfo == null) {
