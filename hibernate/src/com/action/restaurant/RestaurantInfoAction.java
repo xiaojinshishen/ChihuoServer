@@ -7,6 +7,7 @@ import net.sf.json.JSONObject;
 import com.action.Action;
 import com.code.OC;
 import com.code.RC;
+import com.hibernate.DishInfoDao;
 import com.hibernate.RestaurantInfoDao;
 import com.hibernate.UserInfoDao;
 import com.model.Location;
@@ -71,5 +72,29 @@ public class RestaurantInfoAction extends Action {
 			jsonObject.put("restaurant_count", list.size());
 			jsonObject.put("restaurants", JSONObject.fromObject(list));
 		}
+	}
+	
+	public void getDishInfo() {
+		int restaurant_id;
+		try {
+			restaurant_id = Integer.valueOf(request.getParameter("restaurant_id").trim());
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		RestaurantInfo restaurantInfo = new RestaurantInfoDao().getById(restaurant_id);
+		if (restaurantInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_RESTAURANT_ID);
+			return;
+		}
+		List<?> list = new DishInfoDao().getByRestaurantId(restaurant_id);
+		if (list == null) {
+			jsonObject.put("OC", OC.FAILIED);
+		} else {
+			jsonObject.put("OC", OC.SUCCESS);
+			jsonObject.put("dish_count", list.size());
+			jsonObject.put("dishes", JSONObject.fromObject(list));
+		}
+		
 	}
 }
