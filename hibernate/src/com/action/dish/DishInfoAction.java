@@ -93,11 +93,7 @@ public class DishInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		DishInfo dishInfo = new DishInfoDao().getById(dish_id);
-		if (dishInfo == null) {
-			jsonObject.put("OC", OC.UNKNOWN_DISH_ID);
-			return;
-		}
+		
 		List<?> dishLabelList = new DishLabelInfoDao().getByDishId(dish_id);
 		if (dishLabelList == null) {
 			jsonObject.put("OC", OC.FAILIED);
