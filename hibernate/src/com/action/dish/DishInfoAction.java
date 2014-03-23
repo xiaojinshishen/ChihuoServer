@@ -1,10 +1,15 @@
 package com.action.dish;
 
 
+import java.util.List;
+
+import net.sf.json.JSONObject;
+
 import com.action.Action;
 import com.code.OC;
 import com.code.RC;
 import com.hibernate.DishInfoDao;
+import com.hibernate.DishLabelInfoDao;
 import com.hibernate.RestaurantInfoDao;
 import com.hibernate.UserInfoDao;
 import com.model.DishInfo;
@@ -80,7 +85,32 @@ public class DishInfoAction extends Action {
 		}
 	}
 	
-	public void update() {
+	public void getDishLabelByDishId() {
+		int dish_id;
+		try {
+			dish_id = Integer.valueOf(request.getParameter("dish_id").trim());
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		DishInfo dishInfo = new DishInfoDao().getById(dish_id);
+		if (dishInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_DISH_ID);
+			return;
+		}
+		List<?> dishLabelList = new DishLabelInfoDao().getByDishId(dish_id);
+		if (dishLabelList == null) {
+			jsonObject.put("OC", OC.FAILIED);
+			return;
+		} else {
+			jsonObject.put("OC", OC.SUCCESS);
+			jsonObject.put("dish_label_count", dishLabelList.size());
+			jsonObject.put("dish_labels", JSONObject.fromObject(dishLabelList));
+		}
+		
+	}
+	
+	public void updateDishInfo() {
 		int dish_id;
 		String dish_name, user_id, user_password;
 		double dish_price;

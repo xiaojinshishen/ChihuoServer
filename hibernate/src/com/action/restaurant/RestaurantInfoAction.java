@@ -95,6 +95,5 @@ public class RestaurantInfoAction extends Action {
 			jsonObject.put("dish_count", list.size());
 			jsonObject.put("dishes", JSONObject.fromObject(list));
 		}
-		
 	}
 }
