@@ -22,7 +22,12 @@ public class UserCommentAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		jsonObject.put("OC", new UserCommentDao().Insert(userComment));
+
+		try {
+			jsonObject.put("OC", new UserCommentDao().Insert(userComment));
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+		}
 	}
 
 	public void getCommentByDishId() {
@@ -34,14 +39,19 @@ public class UserCommentAction extends Action {
 			return;
 		}
 		String last_time = request.getParameter("last_time");
-		
+
 		List<UserComment> comments;
-		if (last_time == null) {
-			comments = new UserCommentDao().getByDishId(dish_id);
-		} else {
-			comments = new UserCommentDao().getByDishId(dish_id, last_time);
+		try {
+			if (last_time == null) {
+				comments = new UserCommentDao().getByDishId(dish_id);
+			} else {
+				comments = new UserCommentDao().getByDishId(dish_id, last_time);
+			}
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
 		}
-		
+
 		if (comments == null) {
 			jsonObject.put("OC", OC.FAILIED);
 		} else {
