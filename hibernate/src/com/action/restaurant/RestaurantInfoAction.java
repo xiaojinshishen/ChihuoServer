@@ -2,6 +2,7 @@ package com.action.restaurant;
 
 import java.util.List;
 
+
 import net.sf.json.JSONObject;
 
 import com.action.Action;
@@ -15,7 +16,7 @@ import com.model.RestaurantInfo;
 import com.model.UserInfo;
 
 public class RestaurantInfoAction extends Action {
-	
+
 	public void insert() {
 		String user_id, user_password, restaurant_name;
 		double longitude, latitude;
@@ -29,27 +30,36 @@ public class RestaurantInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		
-		UserInfo userInfo = new UserInfoDao().getById(user_id);
+
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
-			return;
 		} else if (!userInfo.getUser_password().equals(user_password)) {
 			jsonObject.put("OC", OC.WRONG_PASSWORD);
-			return;
 		} else if (userInfo.getUser_type().equals("customer")) {
 			jsonObject.put("OC", OC.INSUFFICIENT_PRIVILEGES);
-			return;
 		} else {
 			RestaurantInfo restaurantInfo = new RestaurantInfo();
 			restaurantInfo.setRestaurant_name(restaurant_name);
 			restaurantInfo.setLongitude(longitude);
 			restaurantInfo.setLatitude(latitude);
 			restaurantInfo.setUser_id(user_id);
-			jsonObject.put("OC", new RestaurantInfoDao().Insert(restaurantInfo));
+
+			try {
+				jsonObject.put("OC", new RestaurantInfoDao().Insert(restaurantInfo));
+			} catch (Exception e) {
+				jsonObject.put("RC", RC.SQL_EXCEPTION);
+				return;
+			}
 		}
 	}
-	
+
 	public void getRestaurantByLocation() {
 		double longitude, latitude;
 		try {
@@ -59,11 +69,18 @@ public class RestaurantInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
+
 		Location location = new Location();
 		location.setLongitude(longitude);
 		location.setLatitude(latitude);
-		
-		List<?> list = new RestaurantInfoDao().getByLocation(location);
+
+		List<?> list;
+		try {
+			list = new RestaurantInfoDao().getByLocation(location);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (list == null) {
 			jsonObject.put("OC", OC.FAILIED);
 			return;
@@ -73,7 +90,7 @@ public class RestaurantInfoAction extends Action {
 			jsonObject.put("restaurants", JSONObject.fromObject(list));
 		}
 	}
-	
+
 	public void getDishInfo() {
 		int restaurant_id;
 		try {
@@ -82,12 +99,26 @@ public class RestaurantInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		RestaurantInfo restaurantInfo = new RestaurantInfoDao().getById(restaurant_id);
+
+		RestaurantInfo restaurantInfo;
+		try {
+			restaurantInfo = new RestaurantInfoDao().getById(restaurant_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (restaurantInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_RESTAURANT_ID);
 			return;
 		}
-		List<?> list = new DishInfoDao().getByRestaurantId(restaurant_id);
+
+		List<?> list;
+		try {
+			list = new DishInfoDao().getByRestaurantId(restaurant_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (list == null) {
 			jsonObject.put("OC", OC.FAILIED);
 		} else {

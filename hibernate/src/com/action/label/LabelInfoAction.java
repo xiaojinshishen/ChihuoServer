@@ -8,7 +8,7 @@ import com.hibernate.UserInfoDao;
 import com.model.UserInfo;
 
 public class LabelInfoAction extends Action {
-	
+
 	public void addLabel() {
 		String label_name, user_id;
 		try {
@@ -18,7 +18,14 @@ public class LabelInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfo userInfo = new UserInfoDao().getById(user_id);
+
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 		} else {

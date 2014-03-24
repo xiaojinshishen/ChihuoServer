@@ -23,6 +23,7 @@ public class UserLocationAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
+
 		Location location = new Location();
 		try {
 			location.setLongitude(Double.valueOf(request.getParameter("longitude").trim()));
@@ -31,7 +32,13 @@ public class UserLocationAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		jsonObject.put("OC", new UserLocationDao().insert(user_id, location));
+
+		try {
+			jsonObject.put("OC", new UserLocationDao().insert(user_id, location));
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 	}
 
 	public void getLastLocation() {
@@ -42,7 +49,14 @@ public class UserLocationAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		Location location = new UserLocationDao().getLastLocation(user_id);
+
+		Location location;
+		try {
+			location = new UserLocationDao().getLastLocation(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (location != null) {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("location", JSONObject.fromObject(location));
@@ -57,7 +71,14 @@ public class UserLocationAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		List<?> list = new UserLocationDao().getTrajectory(user_id);
+
+		List<?> list;
+		try {
+			list = new UserLocationDao().getTrajectory(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (list != null) {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("trajectory_count", list.size());
@@ -74,7 +95,14 @@ public class UserLocationAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfo userInfo = new UserInfoDao().getById(user_id);
+
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 		} else if (userInfo.getUser_password() != user_password) {

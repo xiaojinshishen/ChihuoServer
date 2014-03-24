@@ -21,7 +21,13 @@ public class DishHistoryAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		jsonObject.put("OC", new DishHistoryDao().Insert(dishHistory));
+
+		try {
+			jsonObject.put("OC", new DishHistoryDao().Insert(dishHistory));
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 	}
 
 	public void getDishHistory() {
@@ -32,11 +38,17 @@ public class DishHistoryAction extends Action {
 		} catch (Exception e) {
 			dish_id = 0;
 		}
+
 		if (user_id == null && dish_id == 0) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
-			return;
 		} else if (user_id == null && dish_id != 0) {
-			List<?> list = new DishHistoryDao().getByUserId(user_id);
+			List<?> list;
+			try {
+				list = new DishHistoryDao().getByUserId(user_id);
+			} catch (Exception e) {
+				jsonObject.put("RC", RC.SQL_EXCEPTION);
+				return;
+			}
 			if (list == null) {
 				jsonObject.put("OC", OC.FAILIED);
 			} else {

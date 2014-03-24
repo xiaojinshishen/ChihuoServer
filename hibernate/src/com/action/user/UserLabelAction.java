@@ -18,7 +18,7 @@ public class UserLabelAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		
+
 		UserLabel userLabel;
 		try {
 			userLabel = new UserLabelDao().getById(id);
@@ -64,7 +64,7 @@ public class UserLabelAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		
+
 		UserInfo userInfo;
 		try {
 			userInfo = new UserInfoDao().getById(userLabel.getUser_id());

@@ -30,12 +30,26 @@ public class DishInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		RestaurantInfo restaurantInfo = new RestaurantInfoDao().getById(restaurant_id);
+
+		RestaurantInfo restaurantInfo;
+		try {
+			restaurantInfo = new RestaurantInfoDao().getById(restaurant_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (restaurantInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_RESTAURANT_ID);
 			return;
 		}
-		UserInfo userInfo = new UserInfoDao().getById(user_id);
+
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
@@ -57,7 +71,13 @@ public class DishInfoAction extends Action {
 		} catch (Exception e) {
 			dishInfo.setDish_price(0);
 		}
-		jsonObject.put("OC", new DishInfoDao().Insert(dishInfo));
+
+		try {
+			jsonObject.put("OC", new DishInfoDao().Insert(dishInfo));
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 	}
 
 	public void getByDishId() {
@@ -69,10 +89,15 @@ public class DishInfoAction extends Action {
 			return;
 		}
 
-		DishInfo dishInfo = new DishInfoDao().getById(dish_id);
+		DishInfo dishInfo;
+		try {
+			dishInfo = new DishInfoDao().getById(dish_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (dishInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_DISH_ID);
-			return;
 		} else {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("dish_id", dishInfo.getDish_id());
@@ -84,7 +109,7 @@ public class DishInfoAction extends Action {
 			jsonObject.put("date_time", dishInfo.getDate_time());
 		}
 	}
-	
+
 	public void getDishLabelByDishId() {
 		int dish_id;
 		try {
@@ -93,19 +118,25 @@ public class DishInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		
-		List<?> dishLabelList = new DishLabelInfoDao().getByDishId(dish_id);
+
+		List<?> dishLabelList;
+		try {
+			dishLabelList = new DishLabelInfoDao().getByDishId(dish_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
+
 		if (dishLabelList == null) {
 			jsonObject.put("OC", OC.FAILIED);
-			return;
 		} else {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("dish_label_count", dishLabelList.size());
 			jsonObject.put("dish_labels", JSONObject.fromObject(dishLabelList));
 		}
-		
+
 	}
-	
+
 	public void updateDishInfo() {
 		int dish_id;
 		String dish_name, user_id, user_password;
@@ -120,8 +151,14 @@ public class DishInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		
-		UserInfo userInfo = new UserInfoDao().getById(user_id);
+
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
@@ -132,8 +169,14 @@ public class DishInfoAction extends Action {
 			jsonObject.put("OC", OC.INSUFFICIENT_PRIVILEGES);
 			return;
 		}
-		
-		DishInfoDao dishInfoDao = new DishInfoDao();
+
+		DishInfoDao dishInfoDao;
+		try {
+			dishInfoDao = new DishInfoDao();
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		DishInfo dishInfo = dishInfoDao.getById(dish_id);
 		if (dishInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_DISH_ID);

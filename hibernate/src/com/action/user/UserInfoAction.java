@@ -28,7 +28,7 @@ public class UserInfoAction extends Action {
 			jsonObject.put("RC", RC.SQL_EXCEPTION);
 			return;
 		}
-		
+
 		//add userlabel
 		UserLabel userLabel = new UserLabel();
 		userLabel.setUser_id(user_id);
