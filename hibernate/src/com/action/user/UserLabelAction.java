@@ -18,7 +18,14 @@ public class UserLabelAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserLabel userLabel = new UserLabelDao().getById(id);
+		
+		UserLabel userLabel;
+		try {
+			userLabel = new UserLabelDao().getById(id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (userLabel == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
@@ -57,7 +64,14 @@ public class UserLabelAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfo userInfo = new UserInfoDao().getById(userLabel.getUser_id());
+		
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(userLabel.getUser_id());
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
@@ -77,6 +91,11 @@ public class UserLabelAction extends Action {
 		userLabel.setUser_label_value4(request.getParameter("user_label_value4"));
 		userLabel.setUser_label_value5(request.getParameter("user_label_value5"));
 
-		jsonObject.put("OC", new UserLabelDao().update(userLabel));
+		try {
+			jsonObject.put("OC", new UserLabelDao().update(userLabel));
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 	}
 }
