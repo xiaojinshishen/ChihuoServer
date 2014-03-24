@@ -21,23 +21,31 @@ public class UserInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		jsonObject.put("OC", new UserInfoDao().insert(user_id, user_password));
+
 		try {
-			UserLabel userLabel = new UserLabel();
-			userLabel.setUser_id(user_id);
-			userLabel.setUser_label1("");
-			userLabel.setUser_label2("");
-			userLabel.setUser_label3("");
-			userLabel.setUser_label4("");
-			userLabel.setUser_label5("");
-			userLabel.setUser_label_value1("0");
-			userLabel.setUser_label_value1("0");
-			userLabel.setUser_label_value1("0");
-			userLabel.setUser_label_value1("0");
-			userLabel.setUser_label_value1("0");
+			jsonObject.put("OC", new UserInfoDao().insert(user_id, user_password));
+		} catch(Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
+		
+		//add userlabel
+		UserLabel userLabel = new UserLabel();
+		userLabel.setUser_id(user_id);
+		userLabel.setUser_label1("");
+		userLabel.setUser_label2("");
+		userLabel.setUser_label3("");
+		userLabel.setUser_label4("");
+		userLabel.setUser_label5("");
+		userLabel.setUser_label_value1("0");
+		userLabel.setUser_label_value1("0");
+		userLabel.setUser_label_value1("0");
+		userLabel.setUser_label_value1("0");
+		userLabel.setUser_label_value1("0");
+		try {
 			new UserLabelDao().insert(userLabel);
 		} catch(Exception e) {
-
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
 		}
 	}
 
@@ -50,7 +58,15 @@ public class UserInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfo userInfo = new UserInfoDao().getById(user_id);
+
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
+
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
@@ -70,7 +86,14 @@ public class UserInfoAction extends Action {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
 		}
-		UserInfo userInfo = new UserInfoDao().getById(user_id);
+
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 		if (userInfo == null) {
 			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
 			return;
@@ -98,7 +121,12 @@ public class UserInfoAction extends Action {
 		userInfo.setUser_birthday(request.getParameter("user_birthday"));
 		userInfo.setUser_type(request.getParameter("customer"));
 
-		jsonObject.put("OC", new UserInfoDao().update(userInfo));
+		try {
+			jsonObject.put("OC", new UserInfoDao().update(userInfo));
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
 	}
 
 }
