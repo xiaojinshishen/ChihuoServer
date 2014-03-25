@@ -77,7 +77,7 @@ public class RestaurantInfoDao {
 		
 	}
 	
-	public List getByLocation(Location location)
+	public List<RestaurantInfo> getByLocation(Location location)
 	{
 		try{
 			SessionFactory sf = hibernateUtil.getSessionFactory();

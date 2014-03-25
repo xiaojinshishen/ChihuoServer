@@ -1,5 +1,6 @@
 package com.action.restaurant;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -9,11 +10,15 @@ import com.action.Action;
 import com.code.OC;
 import com.code.RC;
 import com.hibernate.DishInfoDao;
+import com.hibernate.DishLabelInfoDao;
 import com.hibernate.RestaurantInfoDao;
 import com.hibernate.UserInfoDao;
+import com.hibernate.UserLabelDao;
+import com.model.DishInfo;
 import com.model.Location;
 import com.model.RestaurantInfo;
 import com.model.UserInfo;
+import com.model.UserLabel;
 
 public class RestaurantInfoAction extends Action {
 
@@ -126,5 +131,54 @@ public class RestaurantInfoAction extends Action {
 			jsonObject.put("dish_count", list.size());
 			jsonObject.put("dishes", JSONObject.fromObject(list));
 		}
+	}
+	
+	public void getRecomemdDishInfo() {
+		String user_id;
+		int restaurant_id;
+		try {
+			user_id = request.getParameter("user_id");
+			restaurant_id = Integer.valueOf(request.getParameter("restaurant_id").trim());
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		
+		UserLabel userLabel;
+		try {
+			userLabel = new UserLabelDao().getById(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
+		if (userLabel == null) {
+			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
+			return;
+		}
+		
+		List<DishInfo> dishList;
+		List<Integer> dishIdList = new ArrayList<Integer>();
+		try {
+			dishList = new DishInfoDao().getByRestaurantId(restaurant_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
+		if (dishList == null) {
+			jsonObject.put("OC", OC.FAILIED);
+			return;
+		} else {
+			DishLabelInfoDao dishLabelInfoDao = new DishLabelInfoDao();
+			for (DishInfo dishInfo : dishList) {
+				dishIdList.add(dishLabelInfoDao.getByDishAndLabel(dishInfo.getDish_id(), userLabel.getUser_label1()).getDish_id());
+				dishIdList.add(dishLabelInfoDao.getByDishAndLabel(dishInfo.getDish_id(), userLabel.getUser_label2()).getDish_id());
+				dishIdList.add(dishLabelInfoDao.getByDishAndLabel(dishInfo.getDish_id(), userLabel.getUser_label3()).getDish_id());
+				dishIdList.add(dishLabelInfoDao.getByDishAndLabel(dishInfo.getDish_id(), userLabel.getUser_label4()).getDish_id());
+				dishIdList.add(dishLabelInfoDao.getByDishAndLabel(dishInfo.getDish_id(), userLabel.getUser_label5()).getDish_id());
+			}
+		}
+		jsonObject.put("OC", OC.SUCCESS);
+		jsonObject.put("dish_id_count", dishIdList.size());
+		jsonObject.put("dish_ids", JSONObject.fromObject(dishIdList));
 	}
 }
