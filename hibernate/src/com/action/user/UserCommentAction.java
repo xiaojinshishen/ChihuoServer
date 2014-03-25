@@ -12,7 +12,7 @@ import com.model.UserComment;
 
 public class UserCommentAction extends Action {
 
-	public void addCommet() {
+	public void addComment() {
 		UserComment userComment = new UserComment();
 		try {
 			userComment.setUser_id(request.getParameter("user_id").trim());
