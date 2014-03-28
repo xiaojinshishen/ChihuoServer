@@ -56,5 +56,27 @@ public class DishHistoryDao {
 				return null;
 			}
 	}
-	
+
+	public List getByUserIdAndDishId(String user_id, int dish_id)
+	{
+		try{
+			SessionFactory sf = hibernateUtil.getSessionFactory();
+			Session session = sf.openSession();   
+			String sql = "select * from dish_history where user_id='"+user_id+"' and dish_id='"+dish_id+"' and DATEDIFF(CURDATE(), date_time) <= 7 order by date_time desc";
+			List list = session.createSQLQuery(sql).addEntity(DishHistory.class).list();
+			//List<UserLocation> list = new ArrayList<UserLocation>();
+			
+			//list = query.list();  
+			
+			session.close();
+			
+
+			
+			
+			return list;
+			}catch(Exception e)
+			{
+				return null;
+			}
+	}
 }
