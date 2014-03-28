@@ -49,6 +49,7 @@ public class mainServlet extends HttpServlet {
 
 		response.setContentType("text/html");
 		response.setCharacterEncoding("utf-8");
+		request.setCharacterEncoding("GB2312");
 		PrintWriter out = response.getWriter();
 
 		String action_class = request.getParameter("action_class");
