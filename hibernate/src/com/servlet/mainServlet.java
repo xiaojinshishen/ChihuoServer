@@ -47,9 +47,10 @@ public class mainServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		response.setContentType("text/html;charset=UTF-8");
+		response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
-		request.setCharacterEncoding("GB2312");
+	
+		request.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 
 		String action_class = request.getParameter("action_class");
