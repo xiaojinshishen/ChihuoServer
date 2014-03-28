@@ -79,7 +79,7 @@ public class RestaurantInfoAction extends Action {
 		location.setLongitude(longitude);
 		location.setLatitude(latitude);
 
-		List<?> list;
+		List<RestaurantInfo> list;
 		try {
 			list = new RestaurantInfoDao().getByLocation(location);
 		} catch (Exception e) {
@@ -117,7 +117,7 @@ public class RestaurantInfoAction extends Action {
 			return;
 		}
 
-		List<?> list;
+		List<DishInfo> list;
 		try {
 			list = new DishInfoDao().getByRestaurantId(restaurant_id);
 		} catch (Exception e) {
@@ -180,5 +180,33 @@ public class RestaurantInfoAction extends Action {
 		jsonObject.put("OC", OC.SUCCESS);
 		jsonObject.put("dish_id_count", dishIdList.size());
 		jsonObject.put("dish_ids", JSONObject.fromObject(dishIdList));
+	}
+
+	public void getRecomemdDishInfoByRestaurantIdList() {
+		String user_id;
+		int RICount;
+		try {
+			user_id = request.getParameter("user_id").trim();
+			RICount = Integer.valueOf(request.getParameter("RI_count").trim());
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		if (RICount == 0) {
+			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+		
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(user_id);
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
+		if (userInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
+			return;
+		}
 	}
 }
