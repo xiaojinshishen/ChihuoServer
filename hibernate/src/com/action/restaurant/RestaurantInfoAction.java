@@ -92,7 +92,7 @@ public class RestaurantInfoAction extends Action {
 		} else {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("restaurant_count", list.size());
-			jsonObject.put("restaurants", JSONObject.fromObject(list));
+			jsonObject.put("restaurants", JSONObject.fromObject(list).toString());
 		}
 	}
 
