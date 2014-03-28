@@ -3,6 +3,7 @@ package com.action.user;
 
 import java.util.List;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import com.action.Action;
@@ -82,7 +83,7 @@ public class UserLocationAction extends Action {
 		if (list != null) {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("trajectory_count", list.size());
-			jsonObject.put("trajectory", JSONObject.fromObject(list));
+			jsonObject.put("trajectory", JSONArray.fromObject(list));
 		}
 	}
 
