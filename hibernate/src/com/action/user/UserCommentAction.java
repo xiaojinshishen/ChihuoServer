@@ -2,7 +2,7 @@ package com.action.user;
 
 import java.util.List;
 
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 import com.action.Action;
 import com.code.OC;
@@ -57,7 +57,7 @@ public class UserCommentAction extends Action {
 		} else {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("comment_count", comments.size());
-			jsonObject.put("comments", JSONObject.fromObject(comments));
+			jsonObject.put("comments", JSONArray.fromObject(comments));
 		}
 	}
 }

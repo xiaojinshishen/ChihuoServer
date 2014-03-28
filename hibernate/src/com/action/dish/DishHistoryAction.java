@@ -2,7 +2,7 @@ package com.action.dish;
 
 import java.util.List;
 
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 import com.action.Action;
 import com.code.OC;
@@ -54,7 +54,7 @@ public class DishHistoryAction extends Action {
 			} else {
 				jsonObject.put("OC", OC.SUCCESS);
 				jsonObject.put("dish_history_count", list.size());
-				jsonObject.put("dish_histories", JSONObject.fromObject(list));
+				jsonObject.put("dish_histories", JSONArray.fromObject(list));
 			}
 		}
 	}

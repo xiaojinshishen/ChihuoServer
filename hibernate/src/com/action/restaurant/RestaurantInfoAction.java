@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import net.sf.json.JSONObject;
+import net.sf.json.JSONArray;
 
 import com.action.Action;
 import com.code.OC;
@@ -92,7 +92,7 @@ public class RestaurantInfoAction extends Action {
 		} else {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("restaurant_count", list.size());
-			jsonObject.put("restaurants", JSONObject.fromObject(list));
+			jsonObject.put("restaurants", JSONArray.fromObject(list));
 		}
 	}
 
@@ -129,7 +129,7 @@ public class RestaurantInfoAction extends Action {
 		} else {
 			jsonObject.put("OC", OC.SUCCESS);
 			jsonObject.put("dish_count", list.size());
-			jsonObject.put("dishes", JSONObject.fromObject(list));
+			jsonObject.put("dishes", JSONArray.fromObject(list));
 		}
 	}
 	
@@ -179,7 +179,7 @@ public class RestaurantInfoAction extends Action {
 		}
 		jsonObject.put("OC", OC.SUCCESS);
 		jsonObject.put("dish_id_count", dishIdList.size());
-		jsonObject.put("dish_ids", JSONObject.fromObject(dishIdList));
+		jsonObject.put("dish_ids", JSONArray.fromObject(dishIdList));
 	}
 
 	public void getRecomemdDishInfoByRestaurantIdList() {
