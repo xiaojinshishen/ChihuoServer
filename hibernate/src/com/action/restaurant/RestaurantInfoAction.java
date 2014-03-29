@@ -271,9 +271,25 @@ public class RestaurantInfoAction extends Action {
 			return;
 		}
 		
+		//recommend dishinfo list
+		List<DishInfo> recommendDishList = new ArrayList<DishInfo>();
+		DishInfoDao dishInfoDao;
+		try {
+			dishInfoDao = new DishInfoDao();
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
+		DishInfo dishInfo;
+		for (Integer dish_id : dishList) {
+			dishInfo = dishInfoDao.getById(dish_id);
+			if(dishInfo != null)
+				recommendDishList.add(dishInfo);
+		}
+		
 		jsonObject.put("OC", OC.SUCCESS);
-		jsonObject.put("dish_id_count", dishList.size());
-		jsonObject.put("dish_ids", JSONArray.fromObject(dishInfoList));
+		jsonObject.put("dish_info_count", recommendDishList.size());
+		jsonObject.put("dish_infos", JSONArray.fromObject(recommendDishList));
 	}
 
 	//recording the user label, return a Map with label and it's value.
@@ -361,8 +377,7 @@ public class RestaurantInfoAction extends Action {
 				}
 			}
 			//add answer to recommend dish map.
-			if (weight >= 1)
-				dishMap.put(dishInfo.getDish_id(), weight);
+			dishMap.put(dishInfo.getDish_id(), weight);
 		}
 
 		return dishMap;
@@ -381,6 +396,8 @@ public class RestaurantInfoAction extends Action {
 			if (list == null || list.isEmpty())
 				dishList.add(entry.getKey());
 		}
+		if (dishList.size() >= 10)
+			dishList = dishList.subList(0, 10);
 		return dishList;
 	}
 
