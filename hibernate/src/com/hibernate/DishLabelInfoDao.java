@@ -37,7 +37,7 @@ public class DishLabelInfoDao {
 	
 	
 	
-	public List getByDishId(int dish_id)
+	public List<DishLabelInfo> getByDishId(int dish_id)
 	{
 		try{
 		SessionFactory sf = hibernateUtil.getSessionFactory();

@@ -13,6 +13,7 @@ import com.hibernate.DishLabelInfoDao;
 import com.hibernate.RestaurantInfoDao;
 import com.hibernate.UserInfoDao;
 import com.model.DishInfo;
+import com.model.DishLabelInfo;
 import com.model.RestaurantInfo;
 import com.model.UserInfo;
 
@@ -119,7 +120,7 @@ public class DishInfoAction extends Action {
 			return;
 		}
 
-		List<?> dishLabelList;
+		List<DishLabelInfo> dishLabelList;
 		try {
 			dishLabelList = new DishLabelInfoDao().getByDishId(dish_id);
 		} catch (Exception e) {
