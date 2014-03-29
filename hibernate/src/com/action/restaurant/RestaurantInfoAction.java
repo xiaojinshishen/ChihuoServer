@@ -201,7 +201,7 @@ public class RestaurantInfoAction extends Action {
 		try {
 			user_id = request.getParameter("user_id").trim();
 			RI_count = Integer.valueOf(request.getParameter("RI_count").trim());
-			RIs = request.getParameter("RTs").trim();
+			RIs = request.getParameter("RIs").trim();
 			//convert a json parameter to a JSONObject array.
 			arrayObjects = JSONArray.fromObject(RIs).toArray();
 		} catch (Exception e) {
