@@ -13,6 +13,7 @@ import java.util.TreeMap;
 
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import com.action.Action;
 import com.code.OC;
@@ -196,13 +197,13 @@ public class RestaurantInfoAction extends Action {
 		String user_id;
 		int RI_count;
 		String RIs;	//restaurant_id list with json format.
-		List<Integer> RIList;	//restaurant_id list
+		Object[] arrayObjects;
 		try {
 			user_id = request.getParameter("user_id").trim();
 			RI_count = Integer.valueOf(request.getParameter("RI_count").trim());
 			RIs = request.getParameter("RTs").trim();
-			//convert a json parameter to a list.
-			RIList = JSONArray.toList(JSONArray.fromObject(RIs), Integer.class);
+			//convert a json parameter to a JSONObject array.
+			arrayObjects = JSONArray.fromObject(RIs).toArray();
 		} catch (Exception e) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
@@ -210,6 +211,20 @@ public class RestaurantInfoAction extends Action {
 		if (RI_count == 0) {
 			jsonObject.put("RC", RC.PARAMETER_ERROR);
 			return;
+		}
+
+		//parser restaurant_id list.
+		List<Integer> RIList = new ArrayList<Integer>();
+		Integer restaurant_id;
+		for (Object object : arrayObjects) {
+			try {
+				restaurant_id = (Integer)((JSONObject)object).get("restaurant_id");
+			} catch (Exception e) {
+				jsonObject.put("RC", RC.PARAMETER_ERROR);
+				return;
+			}
+			if (restaurant_id != 0)
+				RIList.add(restaurant_id);
 		}
 
 		//get userLabel from DB.
@@ -270,7 +285,7 @@ public class RestaurantInfoAction extends Action {
 			jsonObject.put("OC", OC.FAILIED);
 			return;
 		}
-		
+
 		//recommend dishinfo list
 		List<DishInfo> recommendDishList = new ArrayList<DishInfo>();
 		DishInfoDao dishInfoDao;
@@ -286,7 +301,7 @@ public class RestaurantInfoAction extends Action {
 			if(dishInfo != null)
 				recommendDishList.add(dishInfo);
 		}
-		
+
 		jsonObject.put("OC", OC.SUCCESS);
 		jsonObject.put("dish_info_count", recommendDishList.size());
 		jsonObject.put("dish_infos", JSONArray.fromObject(recommendDishList));
