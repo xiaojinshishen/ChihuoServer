@@ -361,7 +361,8 @@ public class RestaurantInfoAction extends Action {
 				}
 			}
 			//add answer to recommend dish map.
-			dishMap.put(dishInfo.getDish_id(), weight);
+			if (weight >= 1)
+				dishMap.put(dishInfo.getDish_id(), weight);
 		}
 
 		return dishMap;
