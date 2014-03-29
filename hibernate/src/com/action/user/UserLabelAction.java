@@ -98,4 +98,50 @@ public class UserLabelAction extends Action {
 			return;
 		}
 	}
+	
+	public void updateValueOnly() {
+		UserLabel userLabel = new UserLabel();
+		String user_password;
+		try {
+			userLabel.setUser_id(request.getParameter("user_id").trim());
+			user_password = request.getParameter("user_password").trim();
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.PARAMETER_ERROR);
+			return;
+		}
+
+		UserInfo userInfo;
+		try {
+			userInfo = new UserInfoDao().getById(userLabel.getUser_id());
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
+		if (userInfo == null) {
+			jsonObject.put("OC", OC.UNKNOWN_USER_ID);
+			return;
+		}
+		if (!userInfo.getUser_password().equals(user_password)) {
+			jsonObject.put("OC", OC.WRONG_PASSWORD);
+			return;
+		}
+		//set stable user label.
+		userLabel.setUser_label1("酸");
+		userLabel.setUser_label2("甜");
+		userLabel.setUser_label3("苦");
+		userLabel.setUser_label4("辣");
+		userLabel.setUser_label5("咸");
+		userLabel.setUser_label_value1(request.getParameter("user_label_value1"));
+		userLabel.setUser_label_value2(request.getParameter("user_label_value2"));
+		userLabel.setUser_label_value3(request.getParameter("user_label_value3"));
+		userLabel.setUser_label_value4(request.getParameter("user_label_value4"));
+		userLabel.setUser_label_value5(request.getParameter("user_label_value5"));
+
+		try {
+			jsonObject.put("OC", new UserLabelDao().update(userLabel));
+		} catch (Exception e) {
+			jsonObject.put("RC", RC.SQL_EXCEPTION);
+			return;
+		}
+	}
 }
