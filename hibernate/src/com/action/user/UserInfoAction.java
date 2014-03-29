@@ -119,7 +119,6 @@ public class UserInfoAction extends Action {
 		userInfo.setUser_name(request.getParameter("user_name"));
 		userInfo.setUser_sex(request.getParameter("user_sex"));
 		userInfo.setUser_birthday(request.getParameter("user_birthday"));
-		userInfo.setUser_type("customer");
 
 		try {
 			jsonObject.put("OC", new UserInfoDao().update(userInfo));
